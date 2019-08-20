@@ -8,3 +8,9 @@ class Config:
 class ProdConfig(Config):
     SQLALCHEMY_DATABASE_URI = "DATABASE_URL"
     DEBUG = False
+
+class DevConfig(Config):
+    DEBUG = True
+
+
+config_options = {"development": DevConfig, "production": ProdConfig}    
