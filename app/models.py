@@ -15,7 +15,10 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(255), unique=True, index=True)
     password_hash = db.Column(db.String(255))
 
-
+    def check_user_settings_exists(self, user_id):
+        settings = Settings.query.filter_by(user_id=user_id).first()
+        if settings:
+            return settings.id
     def check_user_settings_exists(self, user_id):
         settings = Settings.query.filter_by(user_id=user_id).first()
         if settings:
