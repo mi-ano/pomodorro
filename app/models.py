@@ -7,6 +7,7 @@ from . import db, login_manager
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+
 class User(UserMixin, db.Model):
     __tablename__ = "users"
 
@@ -15,11 +16,22 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(255), unique=True, index=True)
     password_hash = db.Column(db.String(255))
 
-    def check_user_settings_exists(self, user_id):
-        settings = Settings.query.filter_by(user_id=user_id).first()
-        if settings:
-            return settings.id
- class Settings(db.Model):
+    @property
+    def password(self):
+        raise AttributeError("You cannot read the password attribute")
+
+    @password.setter
+    def password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def verify_password(self, password):
+        return check_password_hash(self.password_hash, password)
+
+    def __repr__(self):
+        return "<User {}>".format(self.username)
+
+
+class Settings(db.Model):
     __tablename__ = "settings"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -41,3 +53,9 @@ class User(UserMixin, db.Model):
         if time >= 0 and time <= 60:
             return True
         return False
+
+    def check_user_settings_exists(self, user_id):
+        settings = Settings.query.filter_by(user_id=user_id).first()
+        if settings:
+            return settings.id
+        return None

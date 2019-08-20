@@ -1,4 +1,4 @@
-#!/home/ryan/pomodoro/virtual/bin/python3
+#!/Users/user/Desktop/pomodorro/virtual/bin/python3.7
 # -*- coding: utf-8 -*-
 import re
 import sys
