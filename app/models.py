@@ -19,7 +19,25 @@ class User(UserMixin, db.Model):
         settings = Settings.query.filter_by(user_id=user_id).first()
         if settings:
             return settings.id
-    def check_user_settings_exists(self, user_id):
-        settings = Settings.query.filter_by(user_id=user_id).first()
-        if settings:
-            return settings.id
+ class Settings(db.Model):
+    __tablename__ = "settings"
+
+    id = db.Column(db.Integer, primary_key=True)
+    duration = db.Column(db.Integer())
+    short_break = db.Column(db.Integer())
+    date_format = db.Column(db.String(20))
+    time_format = db.Column(db.String(10))
+    user_id = db.Column(db.Integer(), db.ForeignKey("users.id"), unique=True)
+
+    def __repr__(self):
+        return "<Settings {}>".format(self.id)
+
+    def validate_break(self, break_time):
+        if break_time >= 5 and break_time <= 10:
+            return True
+        return False
+
+    def validate_pomodoro_time(self, time):
+        if time >= 0 and time <= 60:
+            return True
+        return False
