@@ -1,0 +1,38 @@
+<link href="https://fonts.googleapis.com/css?family=Beth+Ellen|Lobster|Monoton&display=swap" rel="stylesheet">
+
+<div class="collapse.navbar-collapse" role="navigation" style="background: linear-gradient(to right, #0e0a0b, #0f070d);">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                
+            <!--  -->
+
+        </div>
+        <div class="navbar-brand" style="padding:0.5px;">
+            <ul class="nav navbar-nav">
+                <li style="font-size:20px;"><a href="/">Home</a></li>
+
+        </div>
+        
+        <ul class="nav navbar-nav navbar-right">
+                {% if current_user.is_authenticated %}
+                <li style="color:white;padding:18px;font-family: 'Monoton', cursive; color:white;"><H3>Welcome, <br> {{current_user.username}}</H3></li>
+                <li class="pro"><a href="{{url_for('main.index',uname=current_user.username)}}"><H3>See Profile</H3></a></li>
+                <li><a href="{{url_for('auth.logout')}}"><H3>Sign out</H3></a></li>
+                {% else %}
+
+                <li><a href="{{url_for('auth.register')}}"><H3>Sign Up</H3></a></li>
+                <li><a href="{{url_for('auth.login')}}"><H3>Sign in</H3></a></li>
+
+                {%endif%}
+              </ul>
+
+
+
+    </div>
+
+</div>

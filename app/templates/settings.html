@@ -1,0 +1,28 @@
+{% extends 'base.html' %}{% import 'bootstrap/wtf.html' as wtf%}
+
+{% block styles%}
+        {{ super() }}
+        <link rel="stylesheet" href="{{url_for('static',filename='css/index.css')}}">
+        <link href="https://fonts.googleapis.com/css?family=Beth+Ellen|Lobster|Monoton&display=swap" rel="stylesheet">
+        {% endblock %}
+<!-- content -->
+<div class="container">
+    {% block content %}
+    <div class="jumbotron text-center">
+        <h1>
+            {{app_name}}
+        </h1>
+    </div>
+    <!--Flash message -->
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-danger">
+        <button type="button" class="close" data-dismiss="alert"></button> {{ message }}
+    </div>
+    {% endfor %}
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        {{ wtf.quick_form(form) }}
+    </div>
+    <div class="col-md-4"></div>
+    {% endblock %}
+</div>
